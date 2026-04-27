@@ -6,7 +6,6 @@ const expeRouter = require("./Routes/expeRouter");
 const incoRouter = require("./Routes/incoRouter");
 const budgRouter = require("./Routes/budgRouter");
 const tranRouter = require("./Routes/tranRoutes");
-const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
