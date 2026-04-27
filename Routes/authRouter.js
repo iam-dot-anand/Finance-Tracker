@@ -5,7 +5,7 @@ const User = require('../Models/User');
 
 const router = express.Router();
 
-
+// Auth Pages
 router.post("/sign-up", async (req, res) => {
     try {
         const { name, email, password } = req.body;

@@ -1,8 +1,9 @@
     const express = require('express');
     const router = express.Router();
-    const authMiddleware = require('../middleware/authMiddleware');
+    const authMiddleware = require('../Middleware/authMiddleware');
     const User = require('../Models/User');
 
+    // fixes in UserRoutes
     router.get("/getUser", authMiddleware, async (req, res) => {
         try {
             const user = await User.findById(req.userId).select("-password");
