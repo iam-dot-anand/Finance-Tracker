@@ -1,29 +1,38 @@
-const express = require('express');
-const connectMongoDB = require('./config/db');
-const authRouter = require('./Routes/authRouter');
-const userRouter = require('./Routes/userRouter');
-const expeRouter = require('./Routes/expeRouter');
-const incoRouter = require('./Routes/incoRouter');
-const budgRouter = require('./Routes/budgRouter');
-const tranRouter = require('./Routes/tranRoutes');
-require('dotenv').config();
+const express = require("express");
+const mongoose = require("mongoose");
+const authRouter = require("./Routes/authRouter");
+const userRouter = require("./Routes/userRouter");
+const expeRouter = require("./Routes/expeRouter");
+const incoRouter = require("./Routes/incoRouter");
+const budgRouter = require("./Routes/budgRouter");
+const tranRouter = require("./Routes/tranRoutes");
+const cors = require("cors");
+require("dotenv").config();
+
 const app = express();
-const PORT = 8000;
-const cors = require('cors');
 
 app.use(cors());
-// middleware
-app.use(express.json());    
+app.use(express.json());
 
-// DB connect
-connectMongoDB();
+// 🔥 MongoDB connection directly here
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB Connected"))
+  .catch((err) => {
+    console.log("DB Error:", err);
+    process.exit(1);
+  });
 
 // routes
-app.use('/auth', authRouter);
-app.use('/user', userRouter);
-app.use('/expense', expeRouter);
-app.use('/income', incoRouter);
-app.use('/budget', budgRouter);
-app.use('/transactions', tranRouter);
+app.use("/auth", authRouter);
+app.use("/user", userRouter);
+app.use("/expense", expeRouter);
+app.use("/income", incoRouter);
+app.use("/budget", budgRouter);
+app.use("/transactions", tranRouter);
 
-app.listen(PORT, () => console.log("Server Started!"));
+const PORT = process.env.PORT || 8000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
